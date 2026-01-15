@@ -160,7 +160,7 @@
     // ✅ Netlify pe backend ka live link lagega
     const API_URL = window.location.hostname.includes("localhost")
       ? "http://localhost:3001"
-      : "PASTE_YOUR_BACKEND_URL_HERE"; // ✅ yaha apna backend deploy url
+      : ; // ✅ yaha apna backend deploy url
 
     try {
       const response = await fetch(`${API_URL}/api/products`);
@@ -216,6 +216,7 @@
     alert(product.name + " has been added to your cart!");
   }
 </script>
+
 
 
 
