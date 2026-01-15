@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Product Details – Jain Vastar Bhandar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* --- General Body Styles --- */
+      body {
+        font-family: "Inter", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f6;
+        color: #282c3f;
+      }
+
+      /* --- Main Container --- */
+      .page-container {
+        max-width: 1200px;
+        margin: 1.5rem auto;
+        padding: 0 1rem;
+      }
+
+      /* --- Breadcrumbs --- */
+      .breadcrumbs {
+        font-size: 0.85rem;
+        color: #535766;
+        margin-bottom: 1rem;
+      }
+      .breadcrumbs a {
+        text-decoration: none;
+        color: #282c3f;
+        font-weight: 500;
+      }
+      .breadcrumbs a:hover {
+        text-decoration: underline;
+      }
+      .breadcrumbs span {
+        margin: 0 0.5rem;
+      }
+
+      /* --- Product Layout Container --- */
+      .product-layout {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3rem; /* Increased gap for better spacing */
+        background-color: #ffffff;
+        padding: 1.5rem;
+        border: 1px solid #f0f0f0;
+      }
+
+      /* --- Left Column: Product Image (Single) --- */
+      .product-image-container {
+        flex: 1 1 50%;
+        max-width: 550px; /* Set a max-width */
+      }
+      #main-product-image {
+        width: 100%;
+        height: auto;
+        object-fit: contain; /* Use contain to ensure full image is visible */
+        border-radius: 4px;
+      }
+
+      /* --- Right Column: Product Info --- */
+      .product-info {
+        flex: 1 1 40%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .product-brand {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #282c3f;
+        margin: 0;
+      }
+
+      .product-name {
+        font-size: 1.25rem;
+        font-weight: 400;
+        color: #535766;
+        margin: 0.25rem 0 0 0; /* Adjusted margin */
+      }
+
+      /* --- NEW STYLE for Fabric Details --- */
+      .product-fabric-detail {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #282c3f;
+        margin: 0.5rem 0 1.25rem 0; /* top, right/left, bottom */
+      }
+
+      .product-ratings {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem;
+        border: 1px solid #eaeaec;
+        border-radius: 4px;
+        margin-bottom: 1.5rem;
+        width: fit-content;
+      }
+      .rating-stars {
+        font-weight: 700;
+        color: #282c3f;
+      }
+      .rating-stars .star-icon {
+        color: #14958f;
+      }
+      .rating-divider {
+        margin: 0 0.75rem;
+        height: 1rem;
+        border-left: 1px solid #eaeaec;
+      }
+      .rating-count {
+        font-size: 0.9rem;
+        color: #535766;
+      }
+
+      .price-container {
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: baseline;
+        gap: 1rem;
+      }
+      .current-price {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #282c3f;
+      }
+      .mrp-price {
+        font-size: 1rem;
+        color: #7e818c;
+        text-decoration: line-through;
+      }
+      .discount {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #ff905a;
+      }
+      .tax-info {
+        font-weight: 700;
+        color: #03a685;
+        font-size: 0.9rem;
+        margin-top: -1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .size-selector {
+        margin-bottom: 1.5rem;
+      }
+      .size-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+      }
+      .size-header h3 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+      .size-chart-link {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #ff3f6c;
+        text-decoration: none;
+      }
+      .size-buttons {
+        display: flex;
+        gap: 0.75rem;
+      }
+      .size-btn {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid #bfc0c6;
+        background-color: #fff;
+        cursor: pointer;
+        font-weight: 700;
+        color: #282c3f;
+        transition: all 0.2s ease;
+      }
+      .size-btn:hover {
+        border-color: #ff3f6c;
+      }
+      .size-btn.selected {
+        border-color: #ff3f6c;
+        background-color: #ff3f6c;
+        color: #fff;
+      }
+      .size-btn:disabled {
+        background-color: #f5f5f6;
+        color: #d4d5d9;
+        cursor: not-allowed;
+        border-color: #eaeaec;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      .btn {
+        flex-grow: 1;
+        padding: 1rem 0;
+        font-size: 1rem;
+        font-weight: 700;
+        border-radius: 4px;
+        border: 1px solid;
+        cursor: pointer;
+        text-align: center;
+        transition: opacity 0.2s ease;
+      }
+      .btn:hover {
+        opacity: 0.9;
+      }
+      .btn-primary {
+        background-color: #ff3f6c;
+        color: #fff;
+        border-color: #ff3f6c;
+      }
+      .btn-secondary {
+        background-color: #fff;
+        color: #282c3f;
+        border-color: #bfc0c6;
+      }
+
+      /* --- Responsive --- */
+      @media (max-width: 900px) {
+        .product-layout {
+          flex-direction: column;
+        }
+        .product-image-container,
+        .product-info {
+          flex-basis: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page-container" id="product-detail-container">
+      <p>Loading product details...</p>
+    </main>
+
+    <script>
+      let selectedSize = null;
+
+      // --- STATIC DATA (No database changes needed) ---
+      const BRAND_NAME = "Jain Vastar Bhandar";
+      const STATIC_RATING = 4.3;
+      const STATIC_REVIEWS_COUNT = 28;
+      const SIMULATED_DISCOUNT_PERCENT = 22;
+      const AVAILABLE_SIZES = ["S", "M", "L", "XL", "XXL"];
+      const OUT_OF_STOCK_SIZES = ["XXL"];
+      // ----------------------------------------------------
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        const container = document.getElementById("product-detail-container");
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get("id");
+
+        if (!productId) {
+          container.innerHTML = `<p>No product selected. Please go back to the products page.</p>`;
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            `http://localhost:3001/api/products/${productId}`
+          );
+          const product = await response.json();
+
+          // Simulate MRP and Discount from the single price
+          const price = parseFloat(product.price);
+          const mrp = price / (1 - SIMULATED_DISCOUNT_PERCENT / 100);
+
+          // Generate HTML for size buttons using our static size array
+          let sizeButtonsHTML = "";
+          AVAILABLE_SIZES.forEach((size) => {
+            const isDisabled = OUT_OF_STOCK_SIZES.includes(size);
+            sizeButtonsHTML += `<button class="size-btn" ${
+              isDisabled ? "disabled" : ""
+            } onclick="selectSize(this, '${size}')">${size}</button>`;
+          });
+
+          container.innerHTML = `
+            <div class="breadcrumbs">
+              <a href="index.html">Home</a> <span>/</span> <a href="products.html">Clothing</a> <span>/</span> <strong>${
+                product.name
+              }</strong>
+            </div>
+            <div class="product-layout">
+              <div class="product-image-container">
+                <img id="main-product-image" src="${product.image_url}" alt="${
+            product.name
+          }">
+              </div>
+              <div class="product-info">
+                <h1 class="product-brand">${BRAND_NAME}</h1>
+                <h2 class="product-name">${product.name}</h2>
+                <p class="product-fabric-detail"><strong>Fabric:</strong> ${
+                  product.fabric
+                }</p>
+                
+                <div class="product-ratings">
+                  <div class="rating-stars">${STATIC_RATING} <span class="star-icon">★</span></div>
+                  <div class="rating-divider"></div>
+                  <div class="rating-count">${STATIC_REVIEWS_COUNT} Ratings</div>
+                </div>
+
+                <hr style="border: none; border-top: 1px solid #eaeaec; margin-bottom: 1rem;">
+
+                <div class="price-container">
+                  <span class="current-price">₹${price.toFixed(2)}</span>
+                  <span class="mrp-price">MRP ₹${mrp.toFixed(2)}</span>
+                  <span class="discount">(${SIMULATED_DISCOUNT_PERCENT}% OFF)</span>
+                </div>
+                <p class="tax-info">inclusive of all taxes</p>
+
+                <div class="size-selector">
+                  <div class="size-header">
+                    <h3>SELECT SIZE</h3>
+                    <a href="#" class="size-chart-link">SIZE CHART ></a>
+                  </div>
+                  <div class="size-buttons">
+                    ${sizeButtonsHTML}
+                  </div>
+                </div>
+
+                <div class="action-buttons">
+                  <button class="btn btn-primary" onclick='addToCart(${JSON.stringify(
+                    product
+                  )})'>
+                    ADD TO BAG
+                  </button>
+                  <button class="btn btn-secondary">
+                    ♡ WISHLIST
+                  </button>
+                </div>
+
+                <p class="description">${product.description}</p>
+                
+              </div>
+            </div>
+          `;
+        } catch (error) {
+          console.error("Failed to fetch product details:", error);
+          container.innerHTML =
+            "<p>Error loading product details. Please try again later.</p>";
+        }
+      });
+
+      function selectSize(buttonElement, size) {
+        document.querySelectorAll(".size-btn").forEach((btn) => {
+          btn.classList.remove("selected");
+        });
+        buttonElement.classList.add("selected");
+        selectedSize = size;
+      }
+
+      function addToCart(product) {
+        if (!selectedSize) {
+          alert("Please select a size first!");
+          return;
+        }
+
+        let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+        let existing = cart.find(
+          (item) => item.id === product.id && item.size === selectedSize
+        );
+
+        if (existing) {
+          existing.quantity += 1;
+        } else {
+          cart.push({ ...product, quantity: 1, size: selectedSize });
+        }
+
+        localStorage.setItem("cartItems", JSON.stringify(cart));
+        alert(
+          `${product.name} (Size: ${selectedSize}) has been added to your cart!`
+        );
+      }
+    </script>
+  </body>
+</html>

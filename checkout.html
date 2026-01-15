@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout - JAIN VASTAR BHANDAR</title>
+    <style>
+      /* --- All styles from your cart.html --- */
+      :root {
+        --brand: #b22222;
+        --accent: #b88f88;
+        --background: rgb(245, 208, 214);
+        --card-bg: rgb(245, 208, 214);
+        --success: #28a745;
+        --shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+        --radius: 12px;
+        --max-width: 1100px;
+        --container-padding: 24px;
+        --font: "Helvetica Neue", Arial, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: var(--font);
+        background: var(--background);
+        margin: 0;
+        color: #222;
+      }
+      .header {
+        background: #fff;
+        border-bottom: 1px solid #eee;
+        padding: 16px var(--container-padding);
+        display: flex;
+        justify-content: space-between;
+      }
+      .logo {
+        font-weight: 700;
+        color: var(--brand);
+        font-size: 20px;
+      }
+      .header a {
+        text-decoration: none;
+        color: var(--brand);
+        font-weight: 600;
+      }
+      .container {
+        max-width: var(--max-width);
+        margin: 28px auto;
+        padding: 0 var(--container-padding);
+      }
+      .checkout-wrap {
+        display: grid;
+        grid-template-columns: 1fr 360px;
+        gap: 24px;
+        align-items: start;
+      }
+      .left-card {
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        padding: 20px;
+        box-shadow: var(--shadow);
+      }
+      .right-card {
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        padding: 20px;
+        box-shadow: var(--shadow);
+        height: min-content;
+        position: sticky; /* Keeps summary in view on scroll */
+        top: 28px;
+      }
+
+      /* --- Order Summary Styles --- */
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        color: #444;
+      }
+      .total-row {
+        border-top: 1px solid #eee;
+        margin-top: 14px;
+        padding-top: 14px;
+        font-size: 20px;
+        font-weight: 800;
+        display: flex;
+        justify-content: space-between;
+      }
+      .checkout-btn {
+        width: 100%;
+        background: var(--brand);
+        color: #fff;
+        border: none;
+        padding: 12px;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 14px;
+      }
+      h2,
+      h3 {
+        margin-top: 0;
+        margin-bottom: 18px;
+        font-weight: 700;
+      }
+      .summary-items-list {
+        max-height: 300px;
+        overflow-y: auto;
+        padding-right: 10px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #eee;
+      }
+      .summary-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 14px;
+        margin-bottom: 12px;
+      }
+      .summary-item img {
+        width: 48px;
+        height: 48px;
+        border-radius: 6px;
+        object-fit: cover;
+      }
+      .summary-item-details {
+        flex: 1;
+        line-height: 1.4;
+      }
+      .summary-item-price {
+        font-weight: 600;
+      }
+
+      /* --- Form Styles --- */
+      .form-group {
+        margin-bottom: 16px;
+      }
+      .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 6px;
+        font-size: 14px;
+      }
+      .form-group input {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        font-size: 16px;
+        font-family: var(--font);
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .payment-option {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        background: #fff;
+        cursor: pointer;
+      }
+      .payment-option input[type="radio"] {
+        margin-right: 12px;
+        width: 18px;
+        height: 18px;
+      }
+      #card-details {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 16px;
+        margin-top: 10px;
+        background: #fff;
+      }
+
+      /* --- Responsive --- */
+      @media (max-width: 900px) {
+        .checkout-wrap {
+          grid-template-columns: 1fr;
+        }
+        .right-card {
+          /* This makes the summary appear *after* the form on mobile */
+          order: 2;
+          position: static;
+        }
+        .left-card {
+          order: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo">JAIN VASTAR BHANDAR</div>
+      <a href="cart.html">Back to Cart</a>
+    </header>
+
+    <div class="container">
+      <div class="checkout-wrap">
+        <div class="left-card">
+          <form id="checkout-form">
+            <h2>Shipping Address</h2>
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" required />
+            </div>
+            <div class="form-group">
+              <label for="address">Address Line 1</label>
+              <input type="text" id="address" required />
+            </div>
+            <div class="form-group">
+              <label for="address2">Address Line 2 (Optional)</label>
+              <input type="text" id="address2" />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" required />
+              </div>
+              <div class="form-group">
+                <label for="pincode">Pincode</label>
+                <input type="text" id="pincode" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="state">State</label>
+              <input type="text" id="state" required />
+            </div>
+
+            <h2 style="margin-top: 24px">Payment Method</h2>
+            <div class="form-group">
+              <label class="payment-option">
+                <input type="radio" name="payment" value="card" checked />
+                Credit / Debit Card
+              </label>
+              <div id="card-details">
+                <div class="form-group">
+                  <label for="card-number">Card Number</label>
+                  <input
+                    type="text"
+                    id="card-number"
+                    placeholder="1234 5678 9012 3456"
+                  />
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="expiry">Expiry (MM/YY)</label>
+                    <input type="text" id="expiry" placeholder="MM/YY" />
+                  </div>
+                  <div class="form-group">
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" placeholder="123" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="payment-option">
+                <input type="radio" name="payment" value="upi" />
+                UPI
+              </label>
+            </div>
+            <div class="form-group">
+              <label class="payment-option">
+                <input type="radio" name="payment" value="cod" />
+                Cash on Delivery
+              </label>
+            </div>
+
+            <button type="submit" class="checkout-btn">Place Order</button>
+          </form>
+        </div>
+
+        <div class="right-card">
+          <h3>Order Summary</h3>
+          <div class="summary-items-list" id="summary-items-list"></div>
+          <div class="summary-row">
+            <span>Subtotal</span><span id="summary-subtotal">₹0.00</span>
+          </div>
+          <div class="summary-row">
+            <span>Shipping</span><span id="summary-shipping">₹0.00</span>
+          </div>
+          <div class="total-row">
+            <span>Total</span><span id="summary-total">₹0.00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+        // If cart is empty, redirect back to cart page
+        if (cartItems.length === 0) {
+          alert("Your cart is empty. Redirecting...");
+          window.location.href = "cart.html";
+          return;
+        }
+
+        const summaryItemsEl = document.getElementById("summary-items-list");
+        const subtotalEl = document.getElementById("summary-subtotal");
+        const shippingEl = document.getElementById("summary-shipping");
+        const totalEl = document.getElementById("summary-total");
+        const form = document.getElementById("checkout-form");
+
+        function renderSummary() {
+          let subtotal = cartItems.reduce(
+            (s, i) => s + i.price * i.quantity,
+            0
+          );
+          let target = 1000; // Free shipping target from your cart
+          let shipping = subtotal >= target ? 0 : 50;
+          let total = subtotal + shipping;
+
+          // 1. Populate items list
+          summaryItemsEl.innerHTML = cartItems
+            .map(
+              (item) => `
+            <div class="summary-item">
+              <img src="${item.image}" alt="${item.name}">
+              <div class="summary-item-details">
+                <div><strong>${item.name}</strong></div>
+                <div>Qty: ${item.quantity}</div>
+              </div>
+              <span class="summary-item-price">₹${(
+                item.price * item.quantity
+              ).toFixed(2)}</span>
+            </div>
+          `
+            )
+            .join("");
+
+          // 2. Populate totals
+          subtotalEl.innerText = `₹${subtotal.toFixed(2)}`;
+          shippingEl.innerText =
+            shipping === 0 ? "FREE" : `₹${shipping.toFixed(2)}`;
+          totalEl.innerText = `₹${total.toFixed(2)}`;
+        }
+
+        // Handle form submission
+        form.addEventListener("submit", (e) => {
+          e.preventDefault(); // Stop the form from reloading the page
+
+          // Simple validation
+          const name = document.getElementById("name").value;
+          const address = document.getElementById("address").value;
+          if (!name || !address) {
+            alert("Please fill in all required address fields.");
+            return;
+          }
+
+          // On success
+          alert("Thank you for your order! It has been placed successfully.");
+
+          // Clear the cart
+          localStorage.removeItem("cartItems");
+
+          // Redirect to home or a thank you page
+          window.location.href = "index.html";
+        });
+
+        // Initial render
+        renderSummary();
+      });
+    </script>
+  </body>
+</html>

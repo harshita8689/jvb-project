@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Cart - JAIN VASTAR BHANDAR</title>
+    <style>
+      :root {
+        --brand: #b22222;
+        --accent: #b88f88;
+        --background: rgb(245, 208, 214);
+        --card-bg: rgb(245, 208, 214);
+        --success: #28a745;
+        --shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+        --radius: 12px;
+        --max-width: 1100px;
+        --container-padding: 24px;
+        --font: "Helvetica Neue", Arial, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: var(--font);
+        background: rgb(245, 208, 214);
+        margin: 0;
+        color: #222;
+      }
+      .header {
+        background: #fff;
+        border-bottom: 1px solid #eee;
+        padding: 16px var(--container-padding);
+        display: flex;
+        justify-content: space-between;
+      }
+      .logo {
+        font-weight: 700;
+        color: var(--brand);
+        font-size: 20px;
+      }
+      .header a {
+        text-decoration: none;
+        color: var(--brand);
+        font-weight: 600;
+      }
+      .container {
+        max-width: var(--max-width);
+        margin: 28px auto;
+        padding: 0 var(--container-padding);
+      }
+      .cart-wrap {
+        display: grid;
+        grid-template-columns: 1fr 360px;
+        gap: 24px;
+        align-items: start;
+      }
+      .left-card {
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        padding: 20px;
+        box-shadow: var(--shadow);
+      }
+      .info-bar {
+        background: var(--muted);
+        padding: 14px;
+        border-radius: 10px;
+        text-align: center;
+        font-weight: 600;
+        color: #666;
+        margin-bottom: 18px;
+      }
+      .progress-container {
+        background-color: #e5d4d0;
+        border-radius: 10px;
+        overflow: hidden;
+        height: 12px;
+        margin-top: 8px;
+      }
+      .progress-bar {
+        background-color: var(--accent);
+        height: 100%;
+        transition: width 0.3s;
+      }
+      .cart-item {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        padding: 16px;
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 5px 14px rgba(0, 0, 0, 0.04);
+        margin-bottom: 12px;
+      }
+      .cart-item img {
+        width: 96px;
+        height: 96px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+      .item-details {
+        flex: 1;
+      }
+      .item-title {
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      .item-price {
+        color: var(--brand);
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      .qty-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .qty-controls button {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        border: none;
+        background: #f2f2f2;
+        font-size: 18px;
+        cursor: pointer;
+      }
+      .remove-btn {
+        color: #53050d;
+        background: transparent;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+      }
+      .right-card {
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        padding: 20px;
+        box-shadow: var(--shadow);
+        height: min-content;
+      }
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        color: #444;
+      }
+      .promo-input {
+        display: flex;
+        gap: 8px;
+        margin-top: 8px;
+      }
+      .promo-input input {
+        flex: 1;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+      }
+      .promo-input button {
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        padding: 10px 14px;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .total-row {
+        border-top: 1px solid #eee;
+        margin-top: 14px;
+        padding-top: 14px;
+        font-size: 20px;
+        font-weight: 800;
+        display: flex;
+        justify-content: space-between;
+      }
+      .checkout-btn {
+        width: 100%;
+        background: var(--brand);
+        color: #fff;
+        border: none;
+        padding: 12px;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 14px;
+      }
+      .empty-card {
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        padding: 60px 30px;
+        box-shadow: var(--shadow);
+        text-align: center;
+      }
+      .empty-card img {
+        opacity: 0.6;
+        margin-bottom: 12px;
+        height: 80px;
+      }
+      .empty-card h2 {
+        margin: 10px 0 6px;
+        font-size: 22px;
+      }
+      .empty-card p {
+        color: #777;
+        margin-bottom: 18px;
+      }
+      @media (max-width: 900px) {
+        .cart-wrap {
+          grid-template-columns: 1fr;
+        }
+        .right-card {
+          order: 2;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo">JAIN VASTAR BHANDAR</div>
+      <a href="index.html">Continue Shopping</a>
+    </header>
+    <div class="container">
+      <div id="cart-container" class="cart-wrap"></div>
+    </div>
+    <script>
+      let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+      function renderCart() {
+        const cartContainer = document.getElementById("cart-container");
+        if (cartItems.length === 0) {
+          cartContainer.innerHTML = `
+      <div class="empty-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png">
+        <h2>Your cart is empty</h2>
+        <p>Looks like you haven't added anything yet!</p>
+        <a href="products.html"><button class="checkout-btn">Start Shopping</button></a>
+      </div>`;
+          return;
+        }
+        let subtotal = cartItems.reduce((s, i) => s + i.price * i.quantity, 0);
+        let target = 1000;
+        let progress = Math.min((subtotal / target) * 100, 100);
+        cartContainer.innerHTML = `
+    <div class="left-card">
+      <div class="info-bar">
+        ${
+          subtotal >= target
+            ? "You have FREE shipping!"
+            : `Spend ₹${(target - subtotal).toFixed(2)} more for FREE shipping!`
+        }
+        <div class="progress-container"><div class="progress-bar" style="width:${progress}%;"></div></div>
+      </div>
+      ${cartItems
+        .map(
+          (item, idx) => `
+        <div class="cart-item">
+          <img src="${item.image}" alt="${item.name}">
+          <div class="item-details">
+            <div class="item-title">${item.name}</div>
+            <div class="item-price">₹${item.price}</div>
+            <div class="qty-controls">
+              <button onclick="changeQty(${idx},-1)">-</button>
+              ${item.quantity}
+              <button onclick="changeQty(${idx},1)">+</button>
+            </div>
+          </div>
+          <button class="remove-btn" onclick="removeItem(${idx})">&times;</button>
+        </div>
+      `
+        )
+        .join("")}
+    </div>
+    <div class="right-card">
+      <h3>Order Summary</h3>
+      <div class="summary-row"><span>Subtotal</span><span>₹${subtotal.toFixed(
+        2
+      )}</span></div>
+      <div class="summary-row"><span>Shipping</span><span>${
+        subtotal >= target ? "FREE" : "₹50"
+      }</span></div>
+      <div class="promo-input">
+        <input type="text" id="promo" placeholder="Enter promo code">
+        <button onclick="applyPromo()">Apply</button>
+      </div>
+      <div class="total-row"><span>Total</span><span id="total">₹${(
+        subtotal + (subtotal >= target ? 0 : 50)
+      ).toFixed(2)}</span></div>
+      <a href="checkout.html"><button class="checkout-btn">Proceed to Checkout</button></a>
+    </div>`;
+      }
+      function changeQty(i, d) {
+        cartItems[i].quantity += d;
+        if (cartItems[i].quantity <= 0) {
+          cartItems.splice(i, 1);
+        }
+        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+        renderCart();
+      }
+      function removeItem(i) {
+        cartItems.splice(i, 1);
+        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+        renderCart();
+      }
+      function applyPromo() {
+        const code = document
+          .getElementById("promo")
+          .value.trim()
+          .toUpperCase();
+        let subtotal = cartItems.reduce((s, i) => s + i.price * i.quantity, 0);
+        let ship = subtotal >= 1000 ? 0 : 50;
+        if (code === "WELCOME10") {
+          let disc = subtotal * 0.1;
+          document.getElementById("total").innerText = `₹${(
+            subtotal -
+            disc +
+            ship
+          ).toFixed(2)}`;
+        } else {
+          alert("Invalid Promo Code");
+        }
+      }
+      renderCart();
+    </script>
+  </body>
+</html>

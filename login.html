@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Register - JAIN VASTAR BHANDAR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --brand: #b22222;
+            --background: rgb(245, 208, 214);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+        }
+        .form-container {
+            transition: all 0.5s ease-in-out;
+        }
+        #login-form {
+            opacity: 1;
+            transform: translateX(0);
+            z-index: 10;
+        }
+        #register-form {
+            opacity: 0;
+            transform: translateX(100%);
+            z-index: 1;
+            position: absolute;
+            width: 100%;
+        }
+        body.show-register #login-form {
+            opacity: 0;
+            transform: translateX(-100%);
+            z-index: 1;
+        }
+        body.show-register #register-form {
+            opacity: 1;
+            transform: translateX(0);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+
+    <div class="relative w-full max-w-md p-8 bg-white rounded-2xl shadow-xl overflow-hidden">
+        <!-- Header -->
+        <h1 class="text-3xl font-bold text-center text-[--brand] mb-4">JAIN VASTAR BHANDAR</h1>
+        <div id="message-box" class="hidden p-3 mb-4 text-center text-sm rounded-lg"></div>
+
+        <!-- Login Form -->
+        <div id="login-form" class="form-container">
+            <h2 class="text-2xl font-semibold text-gray-700 text-center mb-6">Welcome Back!</h2>
+            <form onsubmit="handleLogin(event)">
+                <div class="mb-4">
+                    <label for="login-email" class="block text-sm font-medium text-gray-600 mb-1">Email</label>
+                    <input type="email" id="login-email" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[--brand]">
+                </div>
+                <div class="mb-6">
+                    <label for="login-password" class="block text-sm font-medium text-gray-600 mb-1">Password</label>
+                    <input type="password" id="login-password" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[--brand]">
+                </div>
+                <button type="submit"
+                    class="w-full bg-[--brand] text-white py-2 px-4 rounded-lg font-semibold hover:bg-opacity-90 transition duration-300">
+                    Login
+                </button>
+            </form>
+            <p class="text-center text-sm text-gray-600 mt-6">
+                Don't have an account? 
+                <button onclick="toggleForms()" class="font-medium text-[--brand] hover:underline">Register here</button>
+            </p>
+        </div>
+
+        <!-- Register Form -->
+        <div id="register-form" class="form-container">
+            <h2 class="text-2xl font-semibold text-gray-700 text-center mb-6">Create Account</h2>
+            <form onsubmit="handleRegister(event)">
+                <div class="mb-4">
+                    <label for="register-email" class="block text-sm font-medium text-gray-600 mb-1">Email</label>
+                    <input type="email" id="register-email" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[--brand]">
+                </div>
+                <div class="mb-6">
+                    <label for="register-password" class="block text-sm font-medium text-gray-600 mb-1">Password</slabel>
+                    <input type="password" id="register-password" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[--brand]">
+                </div>
+                <button type="submit"
+                    class="w-full bg-[--brand] text-white py-2 px-4 rounded-lg font-semibold hover:bg-opacity-90 transition duration-300">
+                    Register
+                </button>
+            </form>
+            <p class="text-center text-sm text-gray-600 mt-6">
+                Already have an account? 
+                <button onclick="toggleForms()" class="font-medium text-[--brand] hover:underline">Login here</button>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3001/api'; // Make sure this matches your server port
+
+        function toggleForms() {
+            document.body.classList.toggle('show-register');
+        }
+
+        function showMessage(message, isError = false) {
+            const msgBox = document.getElementById('message-box');
+            msgBox.textContent = message;
+            msgBox.className = isError 
+                ? 'p-3 mb-4 text-center text-sm rounded-lg bg-red-100 text-red-700' 
+                : 'p-3 mb-4 text-center text-sm rounded-lg bg-green-100 text-green-700';
+            msgBox.classList.remove('hidden');
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || 'Login failed');
+                }
+
+                // Save token and user info
+                localStorage.setItem('authToken', data.token);
+                localStorage.setItem('user', JSON.stringify(data.user));
+
+                showMessage('Login successful! Redirecting...', false);
+
+                // Redirect to admin dashboard if admin, otherwise to homepage
+                if (data.user.role === 'admin') {
+                    window.location.href = 'admin.html';
+                } else {
+                    window.location.href = 'index.html'; // Or your main shop page
+                }
+
+            } catch (error) {
+                showMessage(error.message, true);
+            }
+        }
+
+        async function handleRegister(event) {
+            event.preventDefault();
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+
+            try {
+                const response = await fetch(`${API_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || 'Registration failed');
+                }
+
+                showMessage('Registration successful! Please log in.', false);
+                toggleForms(); // Switch to login form
+
+            } catch (error) {
+                showMessage(error.message, true);
+            }
+        }
+    </script>
+</body>
+</html>

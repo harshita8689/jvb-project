@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jain Vastar Bhandar</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
+    />
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@400;700;900&family=Special+Elite&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <!-- HEADER -->
+    <header>
+      <div class="announcement-wrapper">
+        <div class="announcement-slider">
+          <div>🎉 AVAIL 10% OFF on First Order - Use Code <b>AVAIL10</b></div>
+          <div>🧵 New GANGA Premium Suits Just Launched!</div>
+          <div>📞 Call Now: +91-94169-50256 | +91-70153-44280</div>
+          <div>📍 Visit us at Railway Road, Gharaunda</div>
+        </div>
+      </div>
+
+      <div class="header-container">
+        <div class="logo-text">
+          <img src="images/logo.png" alt="Logo" />
+        </div>
+        <div class="head">
+          <h1>Jain Vastar Bhandar</h1>
+          <p class="tagline">संस्कृति से सजे हर वस्त्र 👑🪔</p>
+        </div>
+
+        <!-- Search + Filter -->
+        <!-- 
+          FIX 1: Wrapped controls in a <form> tag with id "searchForm".
+          This allows us to listen for a "submit" event.
+        -->
+        <form id="searchForm" class="controls">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search products..."
+            <!-- FIX 2: Removed oninput="filterProducts()" which was not defined -->
+          />
+          <select id="fabricFilter" <!-- FIX 3: Removed onchange="filterProducts()" -->
+          >
+            <option value="">All Fabrics</option>
+            <option value="Cotton">Cotton</option>
+            <option value="Silk">Silk</option>
+            <option value="Rayon">Rayon</option>
+          </select>
+          <!-- Add a submit button for clarity, styled to fit in -->
+          <button type="submit" class="search-btn">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+      </div>
+
+      <!-- NAVIGATION -->
+      <nav class="horizontal-navbar">
+        <ul class="nav-menu">
+          <li class="active">
+            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+          </li>
+          <li>
+            <a href="products.html"><i class="fas fa-box"></i> Products</a>
+          </li>
+          <li>
+            <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
+          </li>
+          <li>
+            <a href="#new"><i class="fas fa-star"></i> New Arrivals</a>
+          </li>
+          <li>
+            <a href="#why-choose-us"
+              ><i class="fas fa-question-circle"></i> Why Us</a
+            >
+          </li>
+          <li>
+            <a href="#testimonials"
+              ><i class="fas fa-comment-dots"></i> Testimonials</a
+            >
+          </li>
+          <li>
+            <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+          </li>
+          <li>
+            <a href="#message"><i class="fas fa-paper-plane"></i> Message Us</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main>
+      <section class="brand-video" id="new" data-aos="fade-up">
+        <h2>Newly Launched GANGA SUITS Premium Collection</h2>
+
+        <div class="video-image-wrapper">
+          <div class="video-and-images">
+            <div class="video-block">
+              <video
+                autoplay
+                muted
+                loop
+                playsinline
+                controls
+                poster="images/thumbnail.jpeg.jpg"
+              >
+                <source src="intro.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div class="side-images">
+              <img src="images/banner.jpg" alt="Side Image 1" />
+              <img src="images/banner 2.jpg" alt="Side Image 2" />
+            </div>
+          </div>
+        </div>
+
+        <div class="product-description">
+          <h3>"Peach color embroidered Suit Set. Solid Cotton Silk."</h3>
+          <div style="text-align: center; margin-top: 15px">
+            <a
+              href="products.html#product1"
+              class="btn-buy-now"
+              style="
+                background-color: #b22222;
+                color: white;
+                padding: 10px 20px;
+                text-decoration: none;
+                border-radius: 5px;
+              "
+              >BUY NOW!</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- WHY CHOOSE US -->
+    <section id="why-choose-us" class="why-choose-us">
+      <h2>Why Choose Jain Vastar Bhandar?</h2>
+      <div class="reasons">
+        <div class="reason-card">
+          <h3>Premium Fabrics</h3>
+          <img src="images/premiumfab.jpeg" alt="fabric" />
+          <p>
+            High-quality unstitched fabrics in cotton, silk, muslin-silk,
+            chanderi-silk, and more.
+          </p>
+        </div>
+        <div class="reason-card">
+          <h3>Elegant Fashion Designs</h3>
+          <img src="images/premiumqua.jpeg" alt="quality assurance" />
+          <p>
+            Branded and evergreen clothes from Ganga, Raymond, Siyarams, and
+            others.
+          </p>
+        </div>
+        <div class="reason-card">
+          <h3>Tailor-Friendly Cuts</h3>
+          <img src="images/tailor.jpeg" alt="cuts" />
+          <p>Perfectly measured and cut materials for ideal tailoring.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Trusted by Thousands</h3>
+          <img src="images/trusted choice.jpeg" alt="trust" />
+          <p>Consistent quality and customer satisfaction over the years.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIAL + MESSAGE SECTION -->
+    <div class="testimonial-message-wrapper">
+      <section class="testimonial-section" id="testimonials">
+        <h2 class="testimonial-title">What Our Customers Say</h2>
+        <div class="testimonial-slider-container">
+          <div class="testimonial-slider" id="testimonial-slider">
+            <div class="testimonial-card">
+              <p>"Amazing fabric quality and fast service!"</p>
+              <h4>– Riya S.</h4>
+            </div>
+            <div class="testimonial-card">
+              <p>"Love their new arrivals section!"</p>
+              <h4>– Kiran Mehta</h4>
+            </div>
+            <div class="testimonial-card">
+              <p>"Perfect suits for every occasion."</p>
+              <h4>– Sakshi Gupta</h4>
+            </div>
+            <div class="testimonial-card">
+              <p>"Received so many compliments wearing JVB."</p>
+              <h4>– Anjali Bansal</h4>
+            </div>
+            <div class="testimonial-card">
+              <p>"My favorite store for ethnic wear."</p>
+              <h4>– Priya Jain</h4>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact-form-section" id="message">
+        <h2>Message Us</h2>
+        <form
+          action="https://formspree.io/f/meovqjwq"
+          method="POST"
+          class="contact-form"
+        >
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              required
+              placeholder="Enter your name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Your Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              required
+              placeholder="Enter your email"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="contact">Contact Number</label>
+            <input
+              type="tel"
+              id="contact"
+              name="contact"
+              pattern="[0-9]{10}"
+              required
+              placeholder="Enter your 10-digit number"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="rating">Rate Us</label>
+            <select name="rating" id="rating" required>
+              <option value="" disabled selected>Select rating</option>
+              <option value="5">★★★★★ - Excellent</option>
+              <option value="4">★★★★☆ - Very Good</option>
+              <option value="3">★★★☆☆ - Good</option>
+              <option value="2">★★☆☆☆ - Fair</option>
+              <option value="1">★☆☆☆☆ - Poor</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Your Message</label>
+            <textarea
+              name="message"
+              id="message"
+              rows="5"
+              required
+              placeholder="Type your message here..."
+            ></textarea>
+          </div>
+
+          <input
+            type="hidden"
+            name="_subject"
+            value="New message from JVB website"
+          />
+          <input type="text" name="_gotcha" style="display: none" />
+
+          <button type="submit">Send Message</button>
+        </form>
+      </section>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-content" id="contact">
+        <p>&copy 2025 JAIN VASTAR BHANDAR. ALL RIGHTS RESERVED.</p>
+        <p><strong>Contact Us:</strong></p>
+        <p>
+          Email:
+          <a href="mailto:jharshita107@gmail.com">✉ jharshita107@gmail.com</a>
+        </p>
+        <p>
+          Phone: <a href="tel:+919416950256">+91 94169 50256</a> |
+          <a href="tel:+917015344280">+91 70153 44280</a>
+        </p>
+        <p>
+          Location:
+          <a
+            href="https://www.google.com/maps?q=Railway+Road,+Gharaunda"
+            target="_blank"
+            >Railway Road, Gharaunda</a
+          >
+        </p>
+        <p>Serving Fashion with love since 1975 🫶</p>
+      </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+      // Announcement Slider
+      $(document).ready(function () {
+        $(".announcement-slider").slick({
+          vertical: true,
+          autoplay: true,
+          autoplaySpeed: 2500,
+          arrows: true,
+          dots: false,
+          infinite: true,
+          pauseOnHover: false,
+        });
+      });
+
+      // AOS Init
+      document.addEventListener("DOMContentLoaded", function () {
+        AOS.init({ once: true });
+      });
+
+      // --- SEARCH FORM FIX ---
+      const homeSearchInput = document.getElementById("searchInput");
+      const homeFabricFilter = document.getElementById("fabricFilter");
+      // FIX 4: Select the new <form> element by its ID
+      const homeSearchForm = document.getElementById("searchForm");
+
+      // FIX 5: Listen for the "submit" event on the form
+      homeSearchForm.addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent default form submission
+        const searchTerm = homeSearchInput.value.trim();
+        const fabric = homeFabricFilter.value;
+
+        // Build a query string
+        const params = new URLSearchParams();
+        if (searchTerm) {
+          params.append('search', searchTerm);
+        }
+        if (fabric) {
+          params.append('fabric', fabric);
+        }
+
+        // Redirect only if there is a search term or fabric selected
+        if (params.toString()) {
+          window.location.href = `products.html?${params.toString()}`;
+        }
+      });
+      
+      
+      // --- CUSTOM TOAST NOTIFICATION (Replaces alert()) ---
+      function showToast(message, isError = false) {
+        const toast = document.createElement('div');
+        toast.textContent = message;
+        // Basic styling for the toast
+        toast.style.position = 'fixed';
+        toast.style.bottom = '20px';
+        toast.style.left = '50%';
+        toast.style.transform = 'translateX(-50%)';
+        toast.style.padding = '12px 20px';
+        toast.style.borderRadius = '8px';
+        toast.style.backgroundColor = isError ? '#b22222' : '#00796b'; // Using theme colors
+        toast.style.color = 'white';
+        toast.style.zIndex = '1000';
+        toast.style.fontFamily = "'Special Elite', sans-serif"; // Using theme font
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s ease';
+        
+        document.body.appendChild(toast);
+        
+        // Fade in
+        setTimeout(() => {
+            toast.style.opacity = '1';
+        }, 10); // Short delay to trigger transition
+        
+        // Fade out and remove
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => {
+                if (document.body.contains(toast)) {
+                    document.body.removeChild(toast);
+                }
+            }, 300); // Wait for fade out to finish
+        }, 3000); // Show for 3 seconds
+      }
+
+      // --- Form Submission (with toast notifications) ---
+      const form = document.querySelector(".contact-form");
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const submitBtn = form.querySelector("button[type='submit']");
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sending...";
+
+        try {
+          const res = await fetch(form.action, {
+            method: "POST",
+            headers: { Accept: "application/json" },
+            body: new FormData(form),
+          });
+
+          if (res.ok) {
+            // FIX 6: Replaced alert() with showToast()
+            showToast("Thank you! Your message has been sent successfully.");
+            form.reset();
+          } else {
+            // FIX 7: Replaced alert() with showToast()
+            showToast("Oops! Something went wrong. Please try again.", true);
+          }
+        } catch (err) {
+          // FIX 8: Replaced alert() with showToast()
+          showToast("Network error. Please try again.", true);
+          console.error(err);
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Send Message";
+        }
+      });
+    </script>
+    
+    <!-- Simple style for the new search button -->
+    <style>
+        .search-btn {
+            background-color: #b22222; /* Matching 'BUY NOW' button */
+            color: white;
+            border: none;
+            padding: 0 12px;
+            margin-left: -5px; /* Attach to inputs */
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.2s;
+        }
+        .search-btn:hover {
+            background-color: #8c1b1b;
+        }
+        .controls {
+            display: flex; /* Make form elements align nicely */
+        }
+        .controls input[type="text"], .controls select {
+            border-radius: 5px 0 0 5px; /* Adjust rounding */
+        }
+        .controls select {
+            border-radius: 0;
+            margin-left: -1px; /* Fix border overlap */
+        }
+    </style>
+  </body>
+</html>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - JVB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --brand: #b22222;
+        --brand-light: rgb(245, 208, 214);
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8f9fa;
+      }
+      .modal {
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+      .modal.hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+    </style>
+  </head>
+  <body class="text-gray-800">
+    <!-- Header -->
+    <header class="bg-white shadow-md">
+      <nav
+        class="container mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <h1 class="text-2xl font-bold text-[--brand]">Admin Dashboard</h1>
+        <div>
+          <span id="admin-email" class="mr-4 text-gray-700"></span>
+          <button
+            onclick="logout()"
+            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition"
+          >
+            Logout
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-3xl font-semibold text-gray-700">Manage Products</h2>
+        <button
+          onclick="openModal('add-product-modal')"
+          class="px-5 py-2 bg-[--brand] text-white rounded-lg font-semibold hover:bg-opacity-90 transition"
+        >
+          + Add New Product
+        </button>
+      </div>
+
+      <!-- Products Table -->
+      <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+        <table class="w-full">
+          <thead class="bg-gray-100 border-b border-gray-200">
+            <tr>
+              <th
+                class="p-4 text-left text-sm font-semibold text-gray-600 uppercase"
+              >
+                Image
+              </th>
+              <th
+                class="p-4 text-left text-sm font-semibold text-gray-600 uppercase"
+              >
+                Name
+              </th>
+              <th
+                class="p-4 text-left text-sm font-semibold text-gray-600 uppercase"
+              >
+                Price
+              </th>
+              <th
+                class="p-4 text-left text-sm font-semibold text-gray-600 uppercase"
+              >
+                Fabric
+              </th>
+              <th
+                class="p-4 text-left text-sm font-semibold text-gray-600 uppercase"
+              >
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody id="products-table-body">
+            <!-- Product rows will be injected here by JS -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <!-- Add/Edit Product Modal -->
+    <div
+      id="add-product-modal"
+      class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
+    >
+      <div
+        class="bg-white rounded-2xl shadow-xl w-full max-w-2xl p-8"
+        onclick="event.stopPropagation()"
+      >
+        <div class="flex justify-between items-center mb-6">
+          <h3 id="modal-title" class="text-2xl font-semibold text-gray-700">
+            Add New Product
+          </h3>
+          <button
+            onclick="closeModal('add-product-modal')"
+            class="text-2xl text-gray-500 hover:text-gray-700"
+          >
+            &times;
+          </button>
+        </div>
+        <form id="product-form" onsubmit="handleFormSubmit(event)">
+          <input type="hidden" id="product-id" />
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label
+                for="name"
+                class="block text-sm font-medium text-gray-600 mb-1"
+                >Name</label
+              >
+              <input
+                type="text"
+                id="name"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[--brand]"
+              />
+            </div>
+            <div>
+              <label
+                for="price"
+                class="block text-sm font-medium text-gray-600 mb-1"
+                >Price (₹)</label
+              >
+              <input
+                type="number"
+                step="0.01"
+                id="price"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[--brand]"
+              />
+            </div>
+            <div>
+              <label
+                for="fabric"
+                class="block text-sm font-medium text-gray-600 mb-1"
+                >Fabric</label
+              >
+              <input
+                type="text"
+                id="fabric"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[--brand]"
+              />
+            </div>
+            <div>
+              <label
+                for="image_url"
+                class="block text-sm font-medium text-gray-600 mb-1"
+                >Image URL (e.g., images/p21.png)</label
+              >
+              <input
+                type="text"
+                id="image_url"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[--brand]"
+              />
+            </div>
+            <div class="md:col-span-2">
+              <label
+                for="description"
+                class="block text-sm font-medium text-gray-600 mb-1"
+                >Description</label
+              >
+              <textarea
+                id="description"
+                rows="4"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[--brand]"
+              ></textarea>
+            </div>
+          </div>
+          <div class="mt-8 flex justify-end gap-4">
+            <button
+              type="button"
+              onclick="closeModal('add-product-modal')"
+              class="px-5 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="px-5 py-2 bg-[--brand] text-white rounded-lg font-semibold hover:bg-opacity-90 transition"
+            >
+              Save Product
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div
+      id="delete-modal"
+      class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
+    >
+      <div
+        class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-8"
+        onclick="event.stopPropagation()"
+      >
+        <h3 class="text-xl font-semibold text-gray-800 text-center mb-4">
+          Are you sure?
+        </h3>
+        <p class="text-gray-600 text-center mb-6">
+          Do you really want to delete this product? This process cannot be
+          undone.
+        </p>
+        <div class="flex justify-center gap-4">
+          <button
+            id="cancel-delete-btn"
+            class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition"
+          >
+            Cancel
+          </button>
+          <button
+            id="confirm-delete-btn"
+            class="px-6 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const API_URL = "http://localhost:3001/api";
+      const token = localStorage.getItem("authToken");
+      const user = JSON.parse(localStorage.getItem("user"));
+      let productsCache = []; // To store fetched products
+
+      // --- Auth & Init ---
+      document.addEventListener("DOMContentLoaded", () => {
+        if (!token || !user || user.role !== "admin") {
+          // If not an admin, redirect to login
+          logout();
+          return;
+        }
+
+        document.getElementById("admin-email").textContent = user.email;
+        fetchProducts();
+
+        // Add modal close listeners
+        document
+          .getElementById("add-product-modal")
+          .addEventListener("click", () => closeModal("add-product-modal"));
+        document
+          .getElementById("delete-modal")
+          .addEventListener("click", () => closeModal("delete-modal"));
+        document
+          .getElementById("cancel-delete-btn")
+          .addEventListener("click", () => closeModal("delete-modal"));
+      });
+
+      function logout() {
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("user");
+        window.location.href = "login.html";
+      }
+
+      // --- Modal Control ---
+      function openModal(modalId) {
+        document.getElementById(modalId).classList.remove("hidden");
+      }
+
+      function closeModal(modalId) {
+        document.getElementById(modalId).classList.add("hidden");
+        // Reset form when closing
+        if (modalId === "add-product-modal") {
+          document.getElementById("product-form").reset();
+          document.getElementById("product-id").value = "";
+          document.getElementById("modal-title").textContent =
+            "Add New Product";
+        }
+      }
+
+      // --- API Functions ---
+
+      // 1. Fetch All Products (Public)
+      async function fetchProducts() {
+        try {
+          const response = await fetch(`${API_URL}/products`);
+          if (!response.ok) throw new Error("Failed to fetch products");
+          productsCache = await response.json();
+          renderProductsTable(productsCache);
+        } catch (error) {
+          console.error(error);
+          alert(error.message);
+        }
+      }
+
+      // 2. Render Table
+      function renderProductsTable(products) {
+        const tableBody = document.getElementById("products-table-body");
+        tableBody.innerHTML = ""; // Clear existing rows
+        if (products.length === 0) {
+          tableBody.innerHTML =
+            '<tr><td colspan="5" class="p-6 text-center text-gray-500">No products found.</td></tr>';
+          return;
+        }
+        products.forEach((product) => {
+          tableBody.innerHTML += `
+                    <tr class="border-b border-gray-200 hover:bg-gray-50">
+                        <td class="p-4">
+                            <img src="${product.image_url}" alt="${product.name}" class="w-16 h-16 object-cover rounded-lg" onerror="this.src='https://placehold.co/64x64/f5d0d6/b22222?text=img'">
+                        </td>
+                        <td class="p-4 text-sm font-medium text-gray-800">${product.name}</td>
+                        <td class="p-4 text-sm text-gray-600">₹${product.price}</td>
+                        <td class="p-4 text-sm text-gray-600">${product.fabric}</td>
+                        <td class="p-4 text-sm">
+                            <button onclick="editProduct(${product.id})" class="px-3 py-1 bg-blue-100 text-blue-700 rounded-md text-xs font-medium hover:bg-blue-200">Edit</button>
+                            <button onclick="confirmDelete(${product.id})" class="px-3 py-1 bg-red-100 text-red-700 rounded-md text-xs font-medium hover:bg-red-200 ml-2">Delete</button>
+                        </td>
+                    </tr>
+                `;
+        });
+      }
+
+      // 3. Handle Form Submit (Create/Update)
+      async function handleFormSubmit(event) {
+        event.preventDefault();
+        const productId = document.getElementById("product-id").value;
+        const productData = {
+          name: document.getElementById("name").value,
+          description: document.getElementById("description").value,
+          price: parseFloat(document.getElementById("price").value),
+          fabric: document.getElementById("fabric").value,
+          image_url: document.getElementById("image_url").value,
+        };
+
+        const isUpdating = !!productId;
+        const url = isUpdating
+          ? `${API_URL}/admin/products/${productId}`
+          : `${API_URL}/admin/products`;
+        const method = isUpdating ? "PUT" : "POST";
+
+        try {
+          const response = await fetch(url, {
+            method: method,
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`, // Send the token
+            },
+            body: JSON.stringify(productData),
+          });
+
+          if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.message || "Failed to save product");
+          }
+
+          closeModal("add-product-modal");
+          fetchProducts(); // Refresh the table
+          alert(`Product ${isUpdating ? "updated" : "added"} successfully!`);
+        } catch (error) {
+          console.error(error);
+          alert(error.message);
+        }
+      }
+
+      // 4. Populate Form for Editing
+      function editProduct(id) {
+        const product = productsCache.find((p) => p.id === id);
+        if (!product) return;
+
+        document.getElementById("modal-title").textContent = "Edit Product";
+        document.getElementById("product-id").value = product.id;
+        document.getElementById("name").value = product.name;
+        document.getElementById("price").value = product.price;
+        document.getElementById("fabric").value = product.fabric;
+        document.getElementById("image_url").value = product.image_url;
+        document.getElementById("description").value = product.description;
+
+        openModal("add-product-modal");
+      }
+
+      // 5. Delete Product
+      function confirmDelete(id) {
+        openModal("delete-modal");
+        const confirmBtn = document.getElementById("confirm-delete-btn");
+        // Clone and replace to remove old event listeners
+        const newConfirmBtn = confirmBtn.cloneNode(true);
+        confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+
+        newConfirmBtn.addEventListener("click", async () => {
+          try {
+            const response = await fetch(`${API_URL}/admin/products/${id}`, {
+              method: "DELETE",
+              headers: {
+                Authorization: `Bearer ${token}`, // Send the token
+              },
+            });
+
+            if (!response.ok) {
+              const err = await response.json();
+              throw new Error(err.message || "Failed to delete product");
+            }
+
+            closeModal("delete-modal");
+            fetchProducts(); // Refresh the table
+            alert("Product deleted successfully!");
+          } catch (error) {
+            console.error(error);
+            alert(error.message);
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
